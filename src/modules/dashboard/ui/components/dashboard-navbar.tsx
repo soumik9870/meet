@@ -27,7 +27,7 @@ export const DashboardNavbar = () => {
     return (
         <>
         <DashboardCommand open={commandOpen} setOpen={setCommandOpen} />
-            <nav className="flex px-4 gap-y-2 items-center py-3 bprder-b bg-background">
+            <nav className="flex px-4 gap-x-3 items-center py-3 border-b bg-background">
                 <Button className="size-9 cursor-pointer" variant="outline" onClick={toggleSidebar} aria-label="Toggle sidebar">
                     {(state === "collapsed" || isMobile) ? <PanelLeftIcon className="size-4 cursor-pointer" /> : <PanelLeftCloseIcon className="size-4 cursor-pointer" />}
                 </Button>
