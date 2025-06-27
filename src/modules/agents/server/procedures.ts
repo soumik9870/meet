@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { agents } from "@/db/schema";
 import { createTRPCRouter,  protectedProcedure } from "@/trpc/init";
 import { agentsInsertSchema } from "../schemas";
-import { eq } from "drizzle-orm";
+import { eq, getTableColumns, sql } from "drizzle-orm";
 // import { TRPCError } from "@trpc/server";
 
 export const agentsRouter = createTRPCRouter({
@@ -18,7 +18,7 @@ export const agentsRouter = createTRPCRouter({
         return data;
     }),
     getOne: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ input }) => {
-        const [existingAgents] = await db.select().from(agents).where(eq(agents.id, input.id));
+        const [existingAgents] = await db.select({...getTableColumns(agents), meetingCount: sql<number>`5`, }).from(agents).where(eq(agents.id, input.id));//TODO: Change to actual count.
 
         // await new Promise((resolve) => setTimeout(resolve, 5000)); // Simulate a delay
         // throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "An error occurred while fetching agents." });
