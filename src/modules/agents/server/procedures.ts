@@ -5,6 +5,7 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { agentsInsertSchema } from "../schemas";
 import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "@/constants";
+import { TRPCError } from "@trpc/server";
 // import { TRPCError } from "@trpc/server";
 
 export const agentsRouter = createTRPCRouter({
@@ -46,8 +47,13 @@ export const agentsRouter = createTRPCRouter({
             // await new Promise((resolve) => setTimeout(resolve, 5000)); // Simulate a delay
             // throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "An error occurred while fetching agents." });
         }),
-    getOne: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ input }) => {
-        const [existingAgents] = await db.select({ ...getTableColumns(agents), meetingCount: sql<number>`5`, }).from(agents).where(eq(agents.id, input.id));//TODO: Change to actual count.
+    getOne: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ input, ctx }) => {
+        const [existingAgents] = await db.select({ ...getTableColumns(agents), meetingCount: sql<number>`5`, }).from(agents).where(and(eq(agents.id, input.id), eq(agents.userId, ctx.auth.user.id),));
+        
+        if(!existingAgents) {
+            throw new TRPCError({ code: "NOT_FOUND", message: "Agent Not found."});
+        }
+        //TODO: Change to actual count.
 
         // await new Promise((resolve) => setTimeout(resolve, 5000)); // Simulate a delay
         // throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "An error occurred while fetching agents." });
