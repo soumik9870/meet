@@ -54,7 +54,7 @@ export const MeetingForm = ({ onSuccess, onCancel, initialValues }: MeetingFormP
                 onSuccess?.(data.id);
             },
             onError: (error) => {
-                toast.error(error.message || "An error occurred while creating the agent.");
+                toast.error(error.message || "An error occurred while creating the meeting.");
 
                 //TODO: check if code is 'FORBIDDEN' and redirect to "/upgrade" page
             },
@@ -78,7 +78,7 @@ export const MeetingForm = ({ onSuccess, onCancel, initialValues }: MeetingFormP
                 onSuccess?.();
             },
             onError: (error) => {
-                toast.error(error.message || "An error occurred while creating the agent.");
+                toast.error(error.message || "An error occurred while creating the meeting.");
 
                 //TODO: check if code is 'FORBIDDEN' and redirect to "/upgrade" page
             },
