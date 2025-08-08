@@ -24,7 +24,7 @@ export const MeetingIdView = ({ meetingId }: Props) => {
 
     const [updateMeetingDialogOpen, setUpdateMeetingDialogOpen] = useState(false);
 
-    const [RemoveConfirmation, confimRemove] = useConfirm(
+    const [RemoveConfirmation, confirmRemove] = useConfirm(
         "Are you Sure?",
         "The following action will remove this meeting"
     );
@@ -40,7 +40,7 @@ export const MeetingIdView = ({ meetingId }: Props) => {
     );
 
     const handleRemove = async () => {
-        const ok = await confimRemove();
+        const ok = await confirmRemove();
 
         if (!ok) return;
 
