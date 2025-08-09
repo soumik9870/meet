@@ -15,13 +15,13 @@ export const UpcomingState = ({
     isCancelling
 }: Props) => {
     return (
-        <div className="bg-white rounded-lg px-4 py-5 flex-col gap-y-8 items-center justify-center">
+        <div className="bg-white rounded-lg px-4 py-5 flex flex-col gap-y-8 items-center justify-center">
             <EmptyState
                 image="/upcoming.svg"
                 title="Meeting not started"
                 description="Once you start a meeting, the summary will appear here."
             />
-            <div className="flex flex-col-reverse lg:flex-row lg:justify-center items-center gap-4 w-full py-8">
+            <div className="flex flex-col-reverse lg:flex-row lg:justify-center items-center gap-4 w-full">
                 <Button
                     variant="secondary"
                     onClick={onCancelMeeting}
